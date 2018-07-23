@@ -50,5 +50,6 @@ setup(
     # -*- Entry points: -*-
     [console_scripts]
     nia-check = netinstauto.scripts.nia_check:main
+    nia-get-iso = netinstauto.scripts.nia_get_iso:main
     """,
 )
