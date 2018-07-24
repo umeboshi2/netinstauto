@@ -3,7 +3,8 @@ include CONTRIBUTING.rst
 include HISTORY.rst
 include LICENSE
 include README.rst
-
+include netinstauto/config.yaml
+recursive-include netinstauto/templates *
 recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]

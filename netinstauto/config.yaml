@@ -1,0 +1,92 @@
+preseed_vars:
+  debian_installer:
+    locale: en_US
+    language: null
+    country: null
+    supported_locales: null
+  keyboard_configuration:
+    xkb_keymap: us
+    toggle: null
+  netcfg:
+    enable: null
+    choose_interface: auto
+    # default is 3
+    link_wait_timeout: null
+    # example is 60
+    dhcp_timeout: null
+    dhcpv6_timout: null
+    # set to true to configure
+    # network manually
+    disable_autoconfig: null
+    # Any hostname and domain names assigned from dhcp take precedence over
+    # values set here. However, setting the values still prevents the questions
+    # from being shown, even if values come from dhcp.
+    get_hostname: unassigned-hostname
+    get_domain: unassigned-domain
+    # If you want to force a hostname, regardless of what either the DHCP
+    # server returns or what the reverse DNS entry for the IP is, uncomment
+    # and adjust the following line.
+    #hostname: null
+    # Disable that annoying WEP key dialog.
+    wireless_wep:
+    # The wacky dhcp hostname that some ISPs use as a password of sorts.
+    dhcp_hostname: null
+  hw_detect:
+    load_firmware: null
+  ### Network console
+  # Use the following settings if you wish to make use of the network-console
+  # component for remote installation over SSH. This only makes sense if you
+  # intend to perform the remainder of the installation manually.
+  anna:
+    choose_modules: network-console
+  network_console:
+    #d-i anna/choose_modules string network-console
+    #d-i network-console/authorized_keys_url string http://10.0.0.1/openssh-key
+    #d-i network-console/password password r00tme
+    #d-i network-console/password-again password r00tme
+    enable_network_console: false
+    authorized_keys_url: null
+    password: null
+    password_again: null
+  mirror:
+    country: null
+    http_hostname: ftp.us.debian.org
+    http_directory: /debian
+    http_proxy: http://aptproxy:3142/
+    suite: null
+    udeb_suite: null
+  ### Account setup
+  passwd:
+    root_login: null
+  # Skip creation of a root account (normal user account will be able to
+  # use sudo).
+  #d-i passwd/root-login boolean false
+  # Alternatively, to skip creation of a normal user account.
+  #d-i passwd/make-user boolean false
+
+  # Root password, either in clear text
+  #d-i passwd/root-password password r00tme
+  #d-i passwd/root-password-again password r00tme
+  # or encrypted using a crypt(3)  hash.
+  #d-i passwd/root-password-crypted password [crypt(3) hash]
+
+  # To create a normal user account.
+  #d-i passwd/user-fullname string Debian User
+  #d-i passwd/username string debian
+  # Normal user's password, either in clear text
+  #d-i passwd/user-password password insecure
+  #d-i passwd/user-password-again password insecure
+  # or encrypted using a crypt(3) hash.
+  #d-i passwd/user-password-crypted password [crypt(3) hash]
+  # Create the first user with the specified UID instead of the default.
+  #d-i passwd/user-uid string 1010
+
+# The user account will be added to some standard initial groups. To
+# override that, use this.
+#d-i passwd/user-default-groups string audio cdrom video
+
+    
+  
+    
+#d-i netcfg/hostname string somehost
+

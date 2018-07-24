@@ -11,7 +11,10 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+requirements = [
+    'Jinja2',
+    'PyYAML',
+]
 
 setup_requirements = ['pytest-runner', ]
 
@@ -51,5 +54,6 @@ setup(
     [console_scripts]
     nia-check = netinstauto.scripts.nia_check:main
     nia-get-iso = netinstauto.scripts.nia_get_iso:main
+    nia-mkconfig = netinstauto.scripts.nia_mkconfig:main
     """,
 )
