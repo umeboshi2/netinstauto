@@ -30,7 +30,21 @@ Remaster a netinst iso, and perform preseed auto install.
 Features
 --------
 
-* TODO
+## debian auto install
+
+- https://wiki.debian.org/DebianInstaller/Preseed
+
+- https://www.debian.org/releases/stable/i386/apbs02.html.en
+
+- https://wiki.debian.org/DebianInstaller/Modify/CD
+
+- packages: xorriso (hybrid image maker), isolinux
+
+
+
+
+
+
 
 Credits
 -------
