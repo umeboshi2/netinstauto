@@ -1,50 +1,88 @@
 preseed_vars:
   debian_installer:
+    # Preseeding only locale sets language, country and locale.
+    # The values can also be preseeded individually for greater flexibility.
     locale: en_US
     language: null
     country: null
+  localechooser:
+    # Optionally specify additional locales to be generated.
+    # FIXME - this should be a list
     supported_locales: null
   keyboard_configuration:
+    # Keyboard selection.
     xkb_keymap: us
     toggle: null
   netcfg:
+    ### Network configuration
+    # Disable network configuration entirely. This is useful for cdrom
+    # installations on non-networked devices where the network questions,
+    # warning and long timeouts are a nuisance.
     enable: null
+    # netcfg will choose an interface that has link if possible. This makes it
+    # skip displaying a list if there is more than one interface.
     choose_interface: auto
-    # default is 3
+    # To pick a particular interface instead:
+    #choose_interface: eth1
+    # ---------------------
+    # To set a different link detection timeout (default is 3 seconds).
+    # Values are interpreted as seconds.
     link_wait_timeout: null
+    # If you have a slow dhcp server and the installer times out waiting for
+    # it, this might be useful.
     # example is 60
     dhcp_timeout: null
-    dhcpv6_timout: null
+    dhcpv6_timeout: null
     # set to true to configure
     # network manually
+    # If you prefer to configure the network manually, set disable_autoconfig
+    # to true and set the static network configuration below.
     disable_autoconfig: null
+    # If you want the preconfiguration file to work on systems both with and
+    # without a dhcp server, uncomment these lines and the static network
+    # configuration below.
+    dhcp_failed: null
+    #dhcp_options: Configuration network manually
+    dhcp_options: null
+    # Static Network Settings
+    get_ipaddress: null
+    get_netmask: null
+    get_gateway: null
+    get_nameservers: null
+    # set to true to confirm after setting static options above
+    confirm_static: null
     # Any hostname and domain names assigned from dhcp take precedence over
     # values set here. However, setting the values still prevents the questions
     # from being shown, even if values come from dhcp.
     get_hostname: unassigned-hostname
     get_domain: unassigned-domain
     # If you want to force a hostname, regardless of what either the DHCP
-    # server returns or what the reverse DNS entry for the IP is, uncomment
-    # and adjust the following line.
-    #hostname: null
+    # server returns or what the reverse DNS entry for the IP is, adjust
+    # the following line.
+    hostname: null
     # Disable that annoying WEP key dialog.
     wireless_wep:
     # The wacky dhcp hostname that some ISPs use as a password of sorts.
     dhcp_hostname: null
   hw_detect:
+    # If non-free firmware is needed for the network or other hardware, set to
+    # true to configure the installer to always try to load it, without
+    # prompting. Or change to false to disable asking.
     load_firmware: null
   ### Network console
   # Use the following settings if you wish to make use of the network-console
   # component for remote installation over SSH. This only makes sense if you
   # intend to perform the remainder of the installation manually.
   anna:
-    choose_modules: network-console
+    #choose_modules: network-console
+    choose_modules: null
   network_console:
     #d-i anna/choose_modules string network-console
-    #d-i network-console/authorized_keys_url string http://10.0.0.1/openssh-key
+    #d-i network-console/authorized_keys_url string 
     #d-i network-console/password password r00tme
     #d-i network-console/password-again password r00tme
     enable_network_console: false
+    #authorized_keys_url: http://10.0.0.1/openssh-key
     authorized_keys_url: null
     password: null
     password_again: null
