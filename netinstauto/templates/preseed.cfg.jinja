@@ -49,3 +49,31 @@ d-i netcfg/{{ var }} string {{ netcfg[var] }}
 {%- if netcfg.confirm_static is not none %}
 d-i netcfg/confirm_static boolean {{ netcfg.confirm_static|lower }}
 {%- endif %}
+
+# NETWORK CONSOLE
+{%- if anna.choose_modules is not none %}
+d-i anna/choose_modules string {{ anna.choose_modules }}
+{%- endif %}
+{%- if network_console.authorized_keys_url is not none %}
+d-i network-console/authorized_keys_url string {{ network_console.authorized_keys_url }}
+{%- endif %}
+{%- for var in ['password', 'password-again'] %}
+{% if network_console[var] is not none -%}
+d-i network-console/{{ var }} password {{ network_console[var] }}
+{%- endif %}
+{%- endfor %}
+
+# MIRROR SETTINGS
+d-i mirror/country string manual
+{%- for var in ['hostname', 'directory', 'proxy'] %}
+{% if mirror[var] is not none -%}
+d-i mirror/http/{{ var }} string {{ mirror[var] }}
+{%- endif %}
+{%- endfor %}
+{%- if mirror.suite is not none  %}
+d-i mirror/suite {{ mirror.suite }}
+{% endif %}
+{%- if mirror.udeb_suite is not none  %}
+d-i mirror/udeb/suite {{ mirror.udeb_suite }}
+{% endif %}
+

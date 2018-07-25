@@ -88,10 +88,12 @@ preseed_vars:
     password_again: null
   mirror:
     country: null
-    http_hostname: ftp.us.debian.org
-    http_directory: /debian
-    http_proxy: http://aptproxy:3142/
+    hostname: ftp.us.debian.org
+    directory: /debian
+    proxy: null
+    # Suite to install.
     suite: null
+    # Suite to use for loading installer components (optional).
     udeb_suite: null
   ### Account setup
   passwd:
