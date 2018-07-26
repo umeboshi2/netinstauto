@@ -55,5 +55,6 @@ setup(
     nia-check = netinstauto.scripts.nia_check:main
     nia-get-iso = netinstauto.scripts.nia_get_iso:main
     nia-mkconfig = netinstauto.scripts.nia_mkconfig:main
+    nia-init = netinstauto.scripts.nia_init:main
     """,
 )
