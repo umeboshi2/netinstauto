@@ -101,7 +101,7 @@ d-i passwd/{{ var }} password {{ passwd[var] }}
 {%- endif %}
 {%- endfor %}
 {%- for var in ['user-uid', 'user-gid'] %}
-{% if passwd[var] is not none %}
+{%- if passwd[var] is not none %}
 d-i passwd/{{ var }} string {{ passwd[var] }}
 {%- endif %}
 {%- endfor %}
@@ -163,5 +163,89 @@ d-i partman/{{ var }} boolean {{ partman[var]|lower }}
 {%- if partman.mount_style is not none %}
 d-i partman/mount_style select {{ partman.mount_style }}
 {%- endif %}
+
+# APT INSTALL
+{%- if base_installer.install_recommends is not none %}
+d-i base-installer/install-recommends boolean {{ base_installer.install_recommends|lower }}
+{%- endif %}
+{%- if base_installer.kernel_image is not none %}
+d-i base-installer/kernel/image string {{ base_installer.kernel_image }}
+{%- endif %}
+{%- for var in ['non-free', 'contrib', 'use_mirror'] %}
+{%- if apt_setup[var] is not none %}
+d-i apt-setup/{{ var }} boolean {{ apt_setup[var]|lower }}
+{%- endif %}
+{%- endfor %}
+{%- if apt_setup.services_select is not none %}
+d-i apt-setup/services-select multiselect {{ apt_setup.services_select|join(', ') }}
+{%- endif %}
+{%- if apt_setup.security_host is not none %}
+d-i apt-setup/security_host string {{ apt_setup.security_host }}
+{%- endif %}
+{%- if debian_installer.allow_unauthenticated is not none %}
+d-i debian-installer/allow_unauthenticated boolean {{ debian_installer.allow_unauthenticated }}
+{%- endif %}
+{%- if apt_setup.multiarch is not none %}
+d-i apt-setup/multiarch string {{ apt_setup.multiarch }}
+{%- endif %}
+{%- if tasksel.first is not none %}
+tasksel tasksel/first multiselect {{ tasksel.first|join(', ') }}
+{%- endif %}
+{%- if pkgsel.include is not none %}
+d-i pkgsel/include string {{ pkgsel.include|join(' ') }}
+{%- endif %}
+{%- if pkgsel.upgrade is not none %}
+d-i pkgsel/upgrade select {{ pkgsel.upgrade }}
+{%- endif %}
+{%- if popcon.participate is not none %}
+popularity-contest  popularity-contest/participate boolean {{ popcon.participate|lower }}
+{%- endif %}
+
+# BOOTLOADER
+{%- if grub_installer.skip is not none %}
+d-i grub-installer/skip boolean {{ grub_installer.skip|lower }}
+{%- endif %}
+{%- if lilo_installer.skip is not none %}
+d-i lilo-installer/skip boolean {{ lilo_installer.skip|lower }}
+{%- endif %}
+{%- if grub_installer.only_debian is not none %}
+d-i grub-installer/only_debian boolean {{ grub_installer.only_debian|lower }}
+{%- endif %}
+{%- if grub_installer.with_other_os is not none %}
+d-i grub-installer/with_other_os boolean {{ grub_installer.with_other_os|lower }}
+{%- endif %}
+{%- if grub_installer.bootdev is not none %}
+d-i grub-installer/bootdev string {{ grub_installer.bootdev }}
+{%- endif %}
+{%- for var in ['password', 'password-again', 'password-crypted'] %}
+{%- if grub_installer[var] is not none %}
+d-i grub-installer/{{ var }} password {{ grub_installer[var] }}
+{%- endif %}
+{%- endfor %}
+{%- if finish_install.keep_consoles is not none %}
+d-i finish-install/keep-consoles boolean {{ finish_install.keep_consoles|lower }}
+{%- endif %}
+{%- if finish_install.reboot_in_progress is not none %}
+d-i finish-install/reboot_in_progress note
+{%- endif %}
+{%- if cdrom_detect.eject is not none %}
+d-i cdrom-detect/eject boolean {{ cdrom_detect.eject|lower }}
+{%- endif %}
+{%- if debian_installer.exit_halt is not none %}
+d-i debian-installer/exit/halt boolean {{ debian_installer.exit_halt|lower }}
+{%- endif %}
+{%- if debian_installer.exit_poweroff is not none %}
+d-i debian-installer/exit/poweroff boolean {{ debian_installer.exit_poweroff|lower }}
+{%- endif %}
+{%- if partman.early_command is not none %}
+d-i partman/early_command {{ partman.early_command }}
+{%- endif %}
+{%- for var in ['early_command', 'late_command'] %}
+{%- if preseed[var] is not none %}
+d-i preseed/{{ var }} string {{ preseed[var] }}
+{%- endif %}
+{%- endfor %}
+
+
 
 

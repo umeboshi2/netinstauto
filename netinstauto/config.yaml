@@ -200,6 +200,12 @@ preseed_vars:
     # falling back to UUIDs.
     #mount_style: uuid
     mount_style: null
+    # This command is run immediately before the partitioner starts. It may be
+    # useful to apply dynamic partitioner preseeding that depends on the state
+    # of the disks (which may not be visible when preseed/early_command runs).
+    #early_command:
+    # debconf-set partman-auto/disk "$(list-devices disk | head -n1)"
+    early_command: null
   ### Base system installation
   base_installer:
     # Configure APT to not install recommended packages by default. Use of this
@@ -213,7 +219,7 @@ preseed_vars:
   ### Apt setup
   apt_setup:
     # You can choose to install non-free and contrib software.
-    non_free: true
+    non-free: true
     contrib: true
     # Set this to false if you don't want to use a network mirror
     use_mirror: null
@@ -226,6 +232,7 @@ preseed_vars:
     security_host: null
     #security_host: security.debian.org
     # Additional repositories, local[0-9] available
+    # FIXME: implement this
     additional_sources:
       local0:
         repository: null
@@ -252,6 +259,11 @@ preseed_vars:
     # installed system (if supported by the bootloader installer).
     # Note: options passed to the installer will be added automatically.
     add-kernel-opts: null
+    # Set to true to make the installer shutdown when finished, but not
+    # reboot into the installed system.
+    exit_halt: null
+    # This will power off the machine instead of just halting it.
+    exit_poweroff: null
   tasksel:
     first: null
     #first: 
@@ -266,7 +278,11 @@ preseed_vars:
     # Whether to upgrade packages after debootstrap.
     # Allowed values: none, safe-upgrade, full-upgrade
     upgrade: null
-  popularity_contest:
+  popcon:
+    # Some versions of the installer can report back on what software you have
+    # installed, and what software you use. The default is not to report back,
+    # but sending reports helps the project determine what software is most
+    # popular and include it on CDs.
     participate: false
   grub_installer:
     skip: null
@@ -300,5 +316,36 @@ preseed_vars:
     skip: null
   finish_install:
     keep_consoles: null
+    # change to null to see the reboot note and stop the install
+    reboot_in_progress: note
+  cdrom_detect:
+    # set to false to prevent installer from ejecting the CD during the reboot,
+    # which is useful in some situations.
+    eject: null
+  preseed:
+    ### Running custom commands during the installation
+    # d-i preseeding is inherently not secure. Nothing in the installer checks
+    # for attempts at buffer overflows or other exploits of the values of a
+    # preconfiguration file like this one. Only use preconfiguration files from
+    # trusted locations! To drive that home, and because it's generally useful,
+    # here's a way to run any shell command you'd like inside the installer,
+    # automatically.
+    # This first command is run as early as possible, just after
+    # preseeding is read.
+    #early_command: anna-install some-udeb
+    early_command: null
+    # This command is run just before the install finishes, but when there is
+    # still a usable /target directory. You can chroot to /target and use it
+    # directly, or use the apt-install and in-target commands to easily install
+    # packages and run commands in the target system.
+    #late_command: apt-install zsh; in-target chsh -s /bin/zsh
+    late_command: null
     
-
+### Preseeding other packages
+# Depending on what software you choose to install, or if things go wrong
+# during the installation process, it's possible that other questions may
+# be asked. You can preseed those too, of course. To get a list of every
+# possible question that could be asked during an install, do an
+# installation, and then run these commands:
+#   debconf-get-selections --installer > file
+#   debconf-get-selections >> file
