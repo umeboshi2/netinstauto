@@ -126,6 +126,11 @@ preseed_vars:
     # override that, use this.
     # a list of groups
     user-default-groups: null
+    #user-default-groups:
+    #  - audio
+    #  - video
+    #  - cdrom
+    #  - staff
   ### Clock and time zone setup
   clock_setup:
     # Controls whether or not the hardware clock is set to UTC.

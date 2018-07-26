@@ -77,3 +77,91 @@ d-i mirror/suite {{ mirror.suite }}
 d-i mirror/udeb/suite {{ mirror.udeb_suite }}
 {% endif %}
 
+# ACCOUNT SETUP
+{%- if passwd.root_login is not none %}
+d-i passwd/root-login boolean {{ passwd.root_login|lower }}
+{%- endif %}
+{%- if passwd.make_user is not none %}
+d-i passwd/make-user boolean {{ passwd.make_user|lower }}
+{%- endif %}
+{%- for var in ['root-password', 'root-password-again', 'root-password-crypted'] %}
+{% if passwd[var] is not none -%}
+d-i passwd/{{ var }} password {{ passwd[var] }}
+{%- endif %}
+{%- endfor %}
+{%- if passwd['user-fullname'] is not none %}
+d-i passwd/user-fullname string {{ passwd['user-fullname'] }}
+{%- endif %}
+
+{%- if passwd['username'] is not none %}
+d-i passwd/username string {{ passwd['username'] }}
+{%- endif %}
+
+
+{%- for var in ['user-password', 'user-password-again', 'user-password-crypted'] %}
+{% if passwd[var] is not none -%}
+d-i passwd/{{ var }} password {{ passwd[var] }}
+{%- endif %}
+{%- endfor %}
+{%- for var in ['user-uid', 'user-gid'] %}
+{% if passwd[var] is not none -%}
+d-i passwd/{{ var }} string {{ passwd[var] }}
+{%- endif %}
+{%- endfor %}
+{%- if passwd['user-default-groups'] is not none %}
+d-i passwd/user-default-groups string {{ passwd['user-default-groups']|join(' ') }}
+{%- endif %}
+{%- if clock_setup.utc is not none %}
+d-i clock-setup/utc boolean {{ clock_setup.utc|lower }}
+{%- endif %}
+{%- if time.zone is not none %}
+d-i time/zone string {{ time.zone }}
+{%- endif %}
+{%- if clock_setup.ntp is not none %}
+d-i clock-setup/ntp boolean {{ clock_setup.ntp|lower }}
+{%- endif %}
+{%- if clock_setup.ntp_server is not none %}
+d-i clock-setup/ntp-server string {{ clock_setup.ntp_server }}
+{%- endif %}
+
+# PARTITIONING
+{%- if partman_auto.init_automatically_partition is not none %}
+d-i partman-auto/init_automatically_partition select {{ partman_auto.init_automatically_partition }}
+{%- endif %}
+{%- for var in ['disk', 'method'] %}
+{% if partman_auto[var] is not none -%}
+d-i partman-auto/{{ var }} string {{ partman_auto[var] }}
+{%- endif %}
+{%- endfor %}
+{%- if partman_lvm.device_remove_lvm is not none %}
+d-i partman-lvm/device_remove_lvm boolean {{ partman_lvm.device_remove_lvm|lower }}
+{%- endif %}
+{%- if partman_md.device_remove_md is not none %}
+d-i partman-md/device_remove_md boolean {{ partman_md.device_remove_md|lower }}
+{%- endif %}
+{%- for var in ['confirm', 'confirm_nooverwrite'] %}
+{% if partman_lvm[var] is not none -%}
+d-i partman-lvm/{{ var }} boolean {{ partman_lvm[var]|lower }}
+{%- endif %}
+{%- endfor %}
+{% if partman_auto.choose_recipe is not none -%}
+d-i partman-auto/choose_recipe select {{ partman_auto.choose_recipe }}
+{%- endif %}
+{%- for var in ['expert_recipe_file', 'expert_recipe'] %}
+{% if partman_auto[var] is not none -%}
+d-i partman-auto/{{ var }} string {{ partman_auto[var] }}
+{%- endif %}
+{%- endfor %}
+{% if partman_partitioning.confirm_write_new_label is not none -%}
+d-i partman-partitioning/confirm_write_new_label boolean {{ partman_partitioning.confirm_write_new_label|lower }}
+{%- endif %}
+{% if partman.choose_partition is not none -%}
+d-i partman/choose_partition select {{ partman.choose_partition }}
+{%- endif %}
+{%- for var in ['confirm', 'confirm_nooverwrite'] %}
+{% if partman[var] is not none -%}
+d-i partman/{{ var }} boolean {{ partman[var]|lower }}
+{%- endif %}
+{%- endfor %}
+
+
