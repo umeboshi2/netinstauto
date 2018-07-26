@@ -200,3 +200,105 @@ preseed_vars:
     # falling back to UUIDs.
     #mount_style: uuid
     mount_style: null
+  ### Base system installation
+  base_installer:
+    # Configure APT to not install recommended packages by default. Use of this
+    # option can result in an incomplete system and should only be used by very
+    # experienced users.
+    #install_recommends: false
+    install_recommends: null
+    # The kernel image (meta) package to be installed; "none" can be used if no
+    # kernel is to be installed.
+    kernel_image: null
+  ### Apt setup
+  apt_setup:
+    # You can choose to install non-free and contrib software.
+    non_free: true
+    contrib: true
+    # Set this to false if you don't want to use a network mirror
+    use_mirror: null
+    # Select which update services to use; define the mirrors to be used.
+    # Values shown below are the normal defaults.
+    services_select: null
+    #services_select:
+    #  - security
+    #  - updates
+    security_host: null
+    #security_host: security.debian.org
+    # Additional repositories, local[0-9] available
+    additional_sources:
+      local0:
+        repository: null
+        comment: null
+        # set to true to enable deb-src lines
+        source: null
+        # set key to url of repo public key
+        key: null
+    # set multiarch to i386 to add multiarch configuration for i386
+    multiarch: null
+    # Don't scan more cd's
+    cdrom:
+      # https://unix.stackexchange.com/a/409237
+      # Scan another CD or DVD?
+      set_first: false
+      set_next: false
+      set_failed: false
+  debian_installer:
+    # By default the installer requires that repositories be authenticated
+    # using a known gpg key. This setting can be set to false to disable that
+    # authentication. Warning: Insecure, not recommended.
+    allow_unauthenticated: null
+    # Use the following option to add additional boot parameters for the
+    # installed system (if supported by the bootloader installer).
+    # Note: options passed to the installer will be added automatically.
+    add-kernel-opts: null
+  tasksel:
+    first: null
+    #first: 
+    #  - standard
+    #  - ssh-server
+  pkgsel:
+    # Individual additional packages to install
+    include: null
+    #include:
+    #  - aptitude
+    #  - build-essential
+    # Whether to upgrade packages after debootstrap.
+    # Allowed values: none, safe-upgrade, full-upgrade
+    upgrade: null
+  popularity_contest:
+    participate: false
+  grub_installer:
+    skip: null
+    # This is fairly safe to set, it makes grub install automatically to the MBR
+    # if no other operating system is detected on the machine.
+    only_debian: true
+    # This one makes grub-installer install to the MBR if it
+    # also finds some other OS, which is less safe as it might
+    # not be able to boot that other OS.
+    with_other_os: true
+    # Due notably to potential USB sticks, the location of the MBR can not be
+    # determined safely in general, so this needs to be specified:
+    #bootdev: /dev/sda
+    # To install to the first device (assuming it is not a USB stick):
+    #bootdev: default
+    bootdev: null
+    # Alternatively, if you want to install to a location other than the mbr,
+    # edit the only_debian, with_other_os, and bootdev options
+    # To install grub to multiple disks:
+    #bootdev: (hd0,1) (hd1,1) (hd2,1)
+    # Optional password for grub, either in clear text
+    password: null
+    password-again: null
+    # or encrypted using an MD5 hash, see grub-md5-crypt(8).
+    password-crypted: null
+  lilo_installer:
+    # if you want to install lilo, instead of grub
+    # set grub_installer.skip above to true
+    # you can also skip lilo and install no bootloader
+    # by setting skip to true below
+    skip: null
+  finish_install:
+    keep_consoles: null
+    
+
