@@ -8,7 +8,7 @@ def set_writable_recursive(working_dir):
     print("Files in {} set to writable".format(working_dir))
 
 
-def extract_iso(filename, working_dir='cd'):
+def extract_iso(filename, working_dir='netinst'):
     if not os.path.isdir(working_dir):
         os.mkdir(working_dir)
     else:

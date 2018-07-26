@@ -14,7 +14,7 @@ netinst_url = 'https://cdimage.debian.org/cdimage/unofficial/non-free/cd-includi
     
 
 
-def create_new_iso(filename, working_dir='cd',
+def create_new_iso(filename, working_dir='netinst',
                    binfilename='isohdpfx.bin'):
     cmd = ['chmod', '-R', '-w', working_dir]
     subprocess.check_call(cmd)
