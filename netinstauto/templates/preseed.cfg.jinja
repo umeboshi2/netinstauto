@@ -85,21 +85,18 @@ d-i passwd/root-login boolean {{ passwd.root_login|lower }}
 d-i passwd/make-user boolean {{ passwd.make_user|lower }}
 {%- endif %}
 {%- for var in ['root-password', 'root-password-again', 'root-password-crypted'] %}
-{% if passwd[var] is not none -%}
+{%- if passwd[var] is not none -%}
 d-i passwd/{{ var }} password {{ passwd[var] }}
 {%- endif %}
 {%- endfor %}
 {%- if passwd['user-fullname'] is not none %}
 d-i passwd/user-fullname string {{ passwd['user-fullname'] }}
 {%- endif %}
-
 {%- if passwd['username'] is not none %}
 d-i passwd/username string {{ passwd['username'] }}
 {%- endif %}
-
-
 {%- for var in ['user-password', 'user-password-again', 'user-password-crypted'] %}
-{% if passwd[var] is not none -%}
+{%- if passwd[var] is not none -%}
 d-i passwd/{{ var }} password {{ passwd[var] }}
 {%- endif %}
 {%- endfor %}
