@@ -1,7 +1,7 @@
 #### Contents of the preconfiguration file (for stretch)
 # LOCALE
 {%- for var in ['language', 'country', 'locale'] %}
-{% if debian_installer[var] is not none -%}
+{%- if debian_installer[var] is not none %}
 d-i debian-installer/{{ var }} string {{ debian_installer[var] }}
 {%- endif %}
 {%- endfor %}
@@ -28,7 +28,7 @@ d-i netcfg/choose_interface select {{ netcfg.choose_interface }}
 d-i netcfg/link_wait_timeout string {{ netcfg.link_wait_timeout }}
 {%- endif %}
 {%- for var in ['dhcp_timeout', 'dhcpv6_timeout'] %}
-{% if netcfg[var] is not none -%}
+{%- if netcfg[var] is not none %}
 d-i netcfg/{{ var }} string {{ netcfg[var] }}
 {%- endif %}
 {%- endfor %}
@@ -42,7 +42,7 @@ d-i netcfg/dhcp_failed note
 d-i netcfg/dhcp_options select {{ netcfg.dhcp_options }}
 {%- endif %}
 {%- for var in ['get_ipaddress', 'get_netmask', 'get_gateway', 'get_nameservers'] %}
-{% if netcfg[var] is not none -%}
+{%- if netcfg[var] is not none %}
 d-i netcfg/{{ var }} string {{ netcfg[var] }}
 {%- endif %}
 {%- endfor %}
@@ -58,7 +58,7 @@ d-i anna/choose_modules string {{ anna.choose_modules }}
 d-i network-console/authorized_keys_url string {{ network_console.authorized_keys_url }}
 {%- endif %}
 {%- for var in ['password', 'password-again'] %}
-{% if network_console[var] is not none -%}
+{%- if network_console[var] is not none %}
 d-i network-console/{{ var }} password {{ network_console[var] }}
 {%- endif %}
 {%- endfor %}
@@ -66,13 +66,13 @@ d-i network-console/{{ var }} password {{ network_console[var] }}
 # MIRROR SETTINGS
 d-i mirror/country string manual
 {%- for var in ['hostname', 'directory', 'proxy'] %}
-{% if mirror[var] is not none -%}
+{%- if mirror[var] is not none %}
 d-i mirror/http/{{ var }} string {{ mirror[var] }}
 {%- endif %}
 {%- endfor %}
 {%- if mirror.suite is not none  %}
 d-i mirror/suite {{ mirror.suite }}
-{% endif %}
+{%- endif %}
 {%- if mirror.udeb_suite is not none  %}
 d-i mirror/udeb/suite {{ mirror.udeb_suite }}
 {% endif %}
@@ -85,7 +85,7 @@ d-i passwd/root-login boolean {{ passwd.root_login|lower }}
 d-i passwd/make-user boolean {{ passwd.make_user|lower }}
 {%- endif %}
 {%- for var in ['root-password', 'root-password-again', 'root-password-crypted'] %}
-{%- if passwd[var] is not none -%}
+{%- if passwd[var] is not none %}
 d-i passwd/{{ var }} password {{ passwd[var] }}
 {%- endif %}
 {%- endfor %}
@@ -96,12 +96,12 @@ d-i passwd/user-fullname string {{ passwd['user-fullname'] }}
 d-i passwd/username string {{ passwd['username'] }}
 {%- endif %}
 {%- for var in ['user-password', 'user-password-again', 'user-password-crypted'] %}
-{%- if passwd[var] is not none -%}
+{%- if passwd[var] is not none %}
 d-i passwd/{{ var }} password {{ passwd[var] }}
 {%- endif %}
 {%- endfor %}
 {%- for var in ['user-uid', 'user-gid'] %}
-{% if passwd[var] is not none -%}
+{% if passwd[var] is not none %}
 d-i passwd/{{ var }} string {{ passwd[var] }}
 {%- endif %}
 {%- endfor %}
@@ -126,7 +126,7 @@ d-i clock-setup/ntp-server string {{ clock_setup.ntp_server }}
 d-i partman-auto/init_automatically_partition select {{ partman_auto.init_automatically_partition }}
 {%- endif %}
 {%- for var in ['disk', 'method'] %}
-{% if partman_auto[var] is not none -%}
+{%- if partman_auto[var] is not none %}
 d-i partman-auto/{{ var }} string {{ partman_auto[var] }}
 {%- endif %}
 {%- endfor %}
@@ -137,28 +137,31 @@ d-i partman-lvm/device_remove_lvm boolean {{ partman_lvm.device_remove_lvm|lower
 d-i partman-md/device_remove_md boolean {{ partman_md.device_remove_md|lower }}
 {%- endif %}
 {%- for var in ['confirm', 'confirm_nooverwrite'] %}
-{% if partman_lvm[var] is not none -%}
+{%- if partman_lvm[var] is not none %}
 d-i partman-lvm/{{ var }} boolean {{ partman_lvm[var]|lower }}
 {%- endif %}
 {%- endfor %}
-{% if partman_auto.choose_recipe is not none -%}
+{%- if partman_auto.choose_recipe is not none %}
 d-i partman-auto/choose_recipe select {{ partman_auto.choose_recipe }}
 {%- endif %}
 {%- for var in ['expert_recipe_file', 'expert_recipe'] %}
-{% if partman_auto[var] is not none -%}
+{%- if partman_auto[var] is not none %}
 d-i partman-auto/{{ var }} string {{ partman_auto[var] }}
 {%- endif %}
 {%- endfor %}
-{% if partman_partitioning.confirm_write_new_label is not none -%}
+{%- if partman_partitioning.confirm_write_new_label is not none %}
 d-i partman-partitioning/confirm_write_new_label boolean {{ partman_partitioning.confirm_write_new_label|lower }}
 {%- endif %}
-{% if partman.choose_partition is not none -%}
+{%- if partman.choose_partition is not none %}
 d-i partman/choose_partition select {{ partman.choose_partition }}
 {%- endif %}
 {%- for var in ['confirm', 'confirm_nooverwrite'] %}
-{% if partman[var] is not none -%}
+{%- if partman[var] is not none %}
 d-i partman/{{ var }} boolean {{ partman[var]|lower }}
 {%- endif %}
 {%- endfor %}
+{%- if partman.mount_style is not none %}
+d-i partman/mount_style select {{ partman.mount_style }}
+{%- endif %}
 
 
