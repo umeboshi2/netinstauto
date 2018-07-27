@@ -27,3 +27,15 @@ def extract_bootblock(filename):
            'bs=1', 'count=432']
     subprocess.check_call(cmd)
     print("{} extracted from {}.".format(binfilename, filename))
+
+
+def create_new_iso(filename, working_dir='netinst',
+                   binfilename='isohdpfx.bin'):
+    cmd = ['chmod', '-R', '-w', working_dir]
+    subprocess.check_call(cmd)
+    cmd = ['xorriso', '-as', 'mkisofs', '-o', filename,
+           '-isohybrid-mbr', binfilename, '-c',
+           'isolinux/boot.cat', '-b', 'isolinux/isolinux.bin',
+           '-no-emul-boot', '-boot-load-size', '4',
+           '-boot-info-table', './{}'.format(working_dir)]
+    subprocess.check_call(cmd)
