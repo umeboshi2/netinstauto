@@ -41,13 +41,16 @@ d-i netcfg/dhcp_failed note
 {%- if netcfg.dhcp_options %}
 d-i netcfg/dhcp_options select {{ netcfg.dhcp_options }}
 {%- endif %}
-{%- for var in ['get_ipaddress', 'get_netmask', 'get_gateway', 'get_nameservers'] %}
+{%- for var in ['get_ipaddress', 'get_netmask', 'get_gateway', 'get_nameservers', 'get_hostname', 'get_domain', 'hostname'] %}
 {%- if netcfg[var] is not none %}
 d-i netcfg/{{ var }} string {{ netcfg[var] }}
 {%- endif %}
 {%- endfor %}
 {%- if netcfg.confirm_static is not none %}
 d-i netcfg/confirm_static boolean {{ netcfg.confirm_static|lower }}
+{%- endif %}
+{%- if netcfg.wireless_wep is not none %}
+d-i netcfg/wireless_wep string
 {%- endif %}
 
 # NETWORK CONSOLE
@@ -188,6 +191,11 @@ d-i debian-installer/allow_unauthenticated boolean {{ debian_installer.allow_una
 {%- if apt_setup.multiarch is not none %}
 d-i apt-setup/multiarch string {{ apt_setup.multiarch }}
 {%- endif %}
+{%- for var in ['set-first', 'set-next', 'set-failed'] %}
+{%- if apt_setup.cdrom[var] is not none %}
+d-i apt-setup/cdrom/{{ var }} boolean {{ apt_setup.cdrom[var]|lower }}
+{%- endif %}
+{%- endfor %}
 {%- if tasksel.first is not none %}
 tasksel tasksel/first multiselect {{ tasksel.first|join(', ') }}
 {%- endif %}

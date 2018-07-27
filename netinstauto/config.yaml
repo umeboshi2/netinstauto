@@ -74,7 +74,7 @@ preseed_vars:
     # the following line.
     hostname: null
     # Disable that annoying WEP key dialog.
-    wireless_wep:
+    wireless_wep: ''
     # The wacky dhcp hostname that some ISPs use as a password of sorts.
     dhcp_hostname: null
   hw_detect:
@@ -260,9 +260,9 @@ preseed_vars:
     cdrom:
       # https://unix.stackexchange.com/a/409237
       # Scan another CD or DVD?
-      set_first: false
-      set_next: false
-      set_failed: false
+      set-first: false
+      set-next: false
+      set-failed: false
   tasksel:
     first: null
     #first: 
