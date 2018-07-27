@@ -98,7 +98,7 @@ preseed_vars:
     #authorized_keys_url: http://10.0.0.1/openssh-key
     authorized_keys_url: null
     password: null
-    password_again: null
+    password-again: null
   mirror:
     country: null
     hostname: ftp.us.debian.org
