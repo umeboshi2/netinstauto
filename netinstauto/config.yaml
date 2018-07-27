@@ -5,6 +5,19 @@ preseed_vars:
     locale: en_US
     language: null
     country: null
+    # By default the installer requires that repositories be authenticated
+    # using a known gpg key. This setting can be set to false to disable that
+    # authentication. Warning: Insecure, not recommended.
+    allow_unauthenticated: null
+    # Use the following option to add additional boot parameters for the
+    # installed system (if supported by the bootloader installer).
+    # Note: options passed to the installer will be added automatically.
+    add-kernel-opts: null
+    # Set to true to make the installer shutdown when finished, but not
+    # reboot into the installed system.
+    exit_halt: null
+    # This will power off the machine instead of just halting it.
+    exit_poweroff: null
   localechooser:
     # Optionally specify additional locales to be generated.
     # FIXME - this should be a list
@@ -250,20 +263,6 @@ preseed_vars:
       set_first: false
       set_next: false
       set_failed: false
-  debian_installer:
-    # By default the installer requires that repositories be authenticated
-    # using a known gpg key. This setting can be set to false to disable that
-    # authentication. Warning: Insecure, not recommended.
-    allow_unauthenticated: null
-    # Use the following option to add additional boot parameters for the
-    # installed system (if supported by the bootloader installer).
-    # Note: options passed to the installer will be added automatically.
-    add-kernel-opts: null
-    # Set to true to make the installer shutdown when finished, but not
-    # reboot into the installed system.
-    exit_halt: null
-    # This will power off the machine instead of just halting it.
-    exit_poweroff: null
   tasksel:
     first: null
     #first: 
