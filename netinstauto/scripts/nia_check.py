@@ -1,12 +1,9 @@
 import argparse
 import subprocess
 
-necessary_binaries = ['xorriso', 'bsdtar', 'wget',
-                      'chmod']
+necessary_binaries = ['xorriso', 'bsdtar', 'chmod']
 
 optional_binaries = ['convert', 'mogrify']
-
-netinst_url = 'https://cdimage.debian.org/cdimage/unofficial/non-free/cd-including-firmware/9.5.0+nonfree/amd64/iso-cd/firmware-9.5.0-amd64-netinst.iso' # noqa
 
 
 def which(binary):
