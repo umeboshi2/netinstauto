@@ -41,7 +41,13 @@ Features
 - packages: xorriso (hybrid image maker), isolinux
 
 
+## TODO
 
+- insert preseed.cfg into initrd
+
+- until then, append "auto=true preseed/file=/cdrom/preseed.cfg" to
+  append line in isolinux/gtk.cfg
+  
 
 
 
