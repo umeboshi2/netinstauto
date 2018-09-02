@@ -1,5 +1,7 @@
 import os
 import subprocess
+import hashlib
+import requests
 
 
 def set_writable_recursive(working_dir):
@@ -39,3 +41,20 @@ def create_new_iso(filename, working_dir='netinst',
            '-no-emul-boot', '-boot-load-size', '4',
            '-boot-info-table', './{}'.format(working_dir)]
     subprocess.check_call(cmd)
+
+
+def check_file_sha256(filename, sha256):
+    ck = hashlib.new('sha256')
+    ck.update(open(filename, 'rb').read())
+    return sha256 == ck.hexdigest()
+
+
+def download_file(url, filename):
+    res = requests.get(url, stream=True)
+    with open(filename, 'wb') as outfile:
+        for chunk in res.iter_content(chunk_size=1024):
+            if chunk:
+                outfile.write(chunk)
+    return filename
+
+    

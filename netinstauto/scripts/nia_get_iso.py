@@ -1,20 +1,12 @@
 import os
 import argparse
-import subprocess
-import hashlib
 import requests
 
 from ..util import extract_iso, extract_bootblock
+from ..util import check_file_sha256, download_file
 
-from ..preseeder import get_template
 
 url_root = "https://cdimage.debian.org/cdimage/unofficial/non-free/cd-including-firmware/{version}/{arch}/iso-cd" # noqa
-
-
-def check_file_sha256(filename, sha256):
-    ck = hashlib.new('sha256')
-    ck.update(open(filename, 'rb').read())
-    return sha256 == ck.hexdigest()
 
 
 def get_remote_checksum(urlroot):
@@ -24,14 +16,6 @@ def get_remote_checksum(urlroot):
     sha256, filename = line.split()
     return sha256, filename
 
-
-def download_file(url, filename):
-    res = requests.get(url, stream=True)
-    with open(filename, 'wb') as outfile:
-        for chunk in res.iter_content(chunk_size=1024):
-            if chunk:
-                outfile.write(chunk)
-    return filename
 
 def main():
     url = args.url
