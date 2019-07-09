@@ -1,7 +1,8 @@
 import argparse
 import subprocess
 
-necessary_binaries = ['xorriso', 'bsdtar', 'chmod']
+necessary_binaries = ['xorriso', 'bsdtar', 'chmod',
+                      'cpio', 'gzip', 'gunzip']
 
 optional_binaries = ['convert', 'mogrify']
 
