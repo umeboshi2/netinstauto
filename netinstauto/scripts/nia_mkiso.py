@@ -1,7 +1,7 @@
 import os
 import argparse
 import subprocess
-from io import BytesIO
+# from io import BytesIO
 import yaml
 
 from ..util import set_writable_recursive
@@ -9,6 +9,7 @@ from ..util import create_new_iso
 from ..preseeder import get_template
 
 _archmap = dict(i386='386', amd64='amd')
+
 
 def make_preseed_content():
     template = get_template()
@@ -29,6 +30,7 @@ def get_initrd_filename():
     filename = os.path.join(dirname, "initrd.gz")
     return filename
 
+
 def update_initrd():
     filename = get_initrd_filename()
     print("filename {}".format(filename))
@@ -42,12 +44,13 @@ def update_initrd():
     # add preseed to tar
     cmd = ['cpio', '-H', 'newc', '-o', '-A', '-F', unzipped]
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
-    #proc.stdin.write(make_preseed_content().encode())
+    # proc.stdin.write(make_preseed_content().encode())
     proc.stdin.write('preseed.cfg\n'.encode())
     proc.stdin.close()
     proc.wait()
     cmd = ['gzip', unzipped]
     subprocess.check_call(cmd)
+
 
 def main():
     set_writable_recursive(args.working_dir)

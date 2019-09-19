@@ -56,5 +56,3 @@ def download_file(url, filename):
             if chunk:
                 outfile.write(chunk)
     return filename
-
-    
